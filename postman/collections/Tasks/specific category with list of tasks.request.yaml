@@ -1,0 +1,5 @@
+$kind: http-request
+url: '{{base_url}}/api/tasks/category/{{category_id}}/'
+method: GET
+examples: './.resources/specific category with list of tasks.resources/examples'
+order: 4000

@@ -1,0 +1,5 @@
+$kind: http-request
+url: '{{base_url}}/health/'
+method: GET
+examples: './.resources/health check.resources/examples'
+order: 1000

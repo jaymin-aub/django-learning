@@ -1,0 +1,17 @@
+$kind: http-request
+url: '{{base_url}}/api/tasks/drf/{{task_id}}/update/'
+method: PUT
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+        "title": "Prepare monthly report",
+        "description": "Changed from weekly to monthly",
+        "completed": false,
+        "category": 1
+    }
+examples: './.resources/update task - put.resources/examples'
+order: 8000

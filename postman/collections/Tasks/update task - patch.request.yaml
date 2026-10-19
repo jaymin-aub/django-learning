@@ -1,0 +1,14 @@
+$kind: http-request
+url: '{{base_url}}/api/tasks/drf/{{task_id}}/update/'
+method: PATCH
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+        "completed": true
+    }
+examples: './.resources/update task - patch.resources/examples'
+order: 7000

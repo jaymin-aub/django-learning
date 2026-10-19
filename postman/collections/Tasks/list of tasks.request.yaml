@@ -1,0 +1,5 @@
+$kind: http-request
+url: '{{base_url}}/api/tasks/'
+method: GET
+examples: './.resources/list of tasks.resources/examples'
+order: 2000

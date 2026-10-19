@@ -1,0 +1,26 @@
+$kind: http-example
+name: '400 Bad Request - missing title'
+request:
+  url: 'http://localhost:8000/api/tasks/drf/create/'
+  method: POST
+  body:
+    type: json
+    content: |-
+      {
+          "description": "No title sent"
+      }
+response:
+  statusCode: 400
+  statusText: 'Bad Request'
+  headers:
+    - key: Content-Type
+      value: 'application/json'
+  body:
+    type: json
+    content: |-
+      {
+          "title": [
+              "This field is required."
+          ]
+      }
+order: 2000
