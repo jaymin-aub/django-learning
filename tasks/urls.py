@@ -2,17 +2,26 @@
 URLs for the tasks app.
 
 Every path here starts with "api/tasks/" (see task_manager/urls.py).
-For example, "drf/create/" below becomes "api/tasks/drf/create/".
+For example, "generic/tasks" below becomes "api/tasks/generic/tasks".
 
-The URLs are grouped by the style of view they use:
-    api/tasks/...           -> plain Django views
-    api/tasks/drf/...       -> DRF function views
-    api/tasks/generic/      -> DRF class-based (generic) view
+The same CRUD API is built in several styles, one URL prefix per style:
+    django-fbv/   -> plain Django function views (JsonResponse)
+    django-cbv/   -> plain Django class based views
+    drf-apiview/  -> DRF @api_view function views
+    generic/      -> DRF generic class based views
+    viewset/      -> DRF ModelViewSet + router
+
+Each style (except viewset, whose URLs come from the router) has:
+    <style>/tasks                       GET (list), POST (create)
+    <style>/task/<task_id>              GET, PUT, PATCH, DELETE
+    <style>/categories                  GET (list), POST (create)
+    <style>/category/<category_id>      GET, PUT, PATCH, DELETE
 """
 
 from django.urls import path
+from rest_framework.routers import DefaultRouter
 
-from tasks.views import django_fbv, django_cbv, drf_apiview, drf_generic
+from tasks.views import django_fbv, django_cbv, drf_apiview, drf_generic, drf_viewset
 
 # Namespace for these URLs, so we can refer to them as "tasks:<name>"
 app_name = "tasks"
@@ -21,16 +30,21 @@ urlpatterns = [
     # ------------------------------------------------------------------------------------------------------
     # --- Django function based views (return JsonResponse) ---
     # ------------------------------------------------------------------------------------------------------
-    path("django-fbv/tasks", django_fbv.get_all_tasks, name="django_fbv_task_list"),
+    path("django-fbv/tasks", django_fbv.task_list, name="django_fbv_task_list"),
     path(
         "django-fbv/task/<int:task_id>",
-        django_fbv.get_task_details,
+        django_fbv.task_detail,
         name="django_fbv_task_details",
     ),
     path(
         "django-fbv/categories",
-        django_fbv.get_all_categories,
+        django_fbv.category_list,
         name="django_fbv_category_list",
+    ),
+    path(
+        "django-fbv/category/<int:category_id>",
+        django_fbv.category_detail,
+        name="django_fbv_category_details",
     ),
     # ------------------------------------------------------------------------------------------------------
     # --- Django class based views
@@ -50,23 +64,33 @@ urlpatterns = [
         django_cbv.CategoryListView.as_view(),
         name="django_cbv_category_list",
     ),
+    path(
+        "django-cbv/category/<int:category_id>",
+        django_cbv.CategoryDetailView.as_view(),
+        name="django_cbv_category_details",
+    ),
     # ------------------------------------------------------------------------------------------------------
     # --- DRF @apiview decorator based views
     # ------------------------------------------------------------------------------------------------------
     path(
         "drf-apiview/tasks",
-        drf_apiview.get_all_tasks,
+        drf_apiview.task_list,
         name="drf_apiview_task_list",
     ),
     path(
         "drf-apiview/task/<int:task_id>",
-        drf_apiview.get_task_details,
+        drf_apiview.task_detail,
         name="drf_apiview_task_details",
     ),
     path(
         "drf-apiview/categories",
-        drf_apiview.get_all_categories,
+        drf_apiview.category_list,
         name="drf_apiview_category_list",
+    ),
+    path(
+        "drf-apiview/category/<int:category_id>",
+        drf_apiview.category_detail,
+        name="drf_apiview_category_details",
     ),
     # ------------------------------------------------------------------------------------------------------
     # --- DRF generic class based views
@@ -86,4 +110,18 @@ urlpatterns = [
         drf_generic.CategoryListCreateView.as_view(),
         name="category_list_create",
     ),
+    path(
+        "generic/category/<int:category_id>",
+        drf_generic.CategoryDetailView.as_view(),
+        name="category_detail",
+    ),
 ]
+
+# ------------------------------------------------------------------------------------------------------
+# --- DRF viewsets: the router creates the URLs for us
+#     viewset/tasks, viewset/tasks/<pk>, viewset/categories, viewset/categories/<pk>
+# ------------------------------------------------------------------------------------------------------
+router = DefaultRouter(trailing_slash=False)
+router.register("viewset/tasks", drf_viewset.TaskViewSet, basename="viewset_task")
+router.register("viewset/categories", drf_viewset.CategoryViewSet, basename="viewset_category")
+urlpatterns += router.urls

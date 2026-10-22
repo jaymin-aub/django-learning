@@ -1,0 +1,19 @@
+$kind: http-request
+url: '{{base_url}}/api/tasks/django-fbv/task/{{task_id}}'
+method: PATCH
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+        "completed": true
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status is 200 OK", () => pm.response.to.have.status(200));
+      pm.test("Task is completed", () => pm.expect(pm.response.json().completed).to.eql(true));
+order: 10000

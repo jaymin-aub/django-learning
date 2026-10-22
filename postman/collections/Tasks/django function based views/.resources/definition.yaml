@@ -1,2 +1,3 @@
 $kind: collection
-order: 9000
+description: 'Plain Django function views returning JsonResponse. Run the folder top to bottom to test the full CRUD cycle.'
+order: 2000

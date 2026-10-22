@@ -1,2 +1,3 @@
 $kind: collection
-order: 8000
+description: 'Plain Django class based views (django.views.View). Run the folder top to bottom to test the full CRUD cycle.'
+order: 3000

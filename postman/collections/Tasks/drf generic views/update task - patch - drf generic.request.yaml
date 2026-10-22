@@ -1,5 +1,5 @@
 $kind: http-request
-url: "{{base_url}}/api/tasks/generic/task/{{task_id}}"
+url: '{{base_url}}/api/tasks/generic/task/{{task_id}}'
 method: PATCH
 headers:
   - key: Content-Type
@@ -10,4 +10,10 @@ body:
     {
         "completed": true
     }
-order: 5000
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status is 200 OK", () => pm.response.to.have.status(200));
+      pm.test("Task is completed", () => pm.expect(pm.response.json().completed).to.eql(true));
+order: 10000

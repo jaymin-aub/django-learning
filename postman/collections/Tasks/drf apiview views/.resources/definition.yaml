@@ -1,2 +1,3 @@
 $kind: collection
-order: 10000
+description: 'DRF function views using the @api_view decorator. Run the folder top to bottom to test the full CRUD cycle.'
+order: 4000

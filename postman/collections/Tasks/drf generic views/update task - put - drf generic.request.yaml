@@ -1,5 +1,5 @@
 $kind: http-request
-url: "{{base_url}}/api/tasks/generic/task/{{task_id}}"
+url: '{{base_url}}/api/tasks/generic/task/{{task_id}}'
 method: PUT
 headers:
   - key: Content-Type
@@ -8,9 +8,15 @@ body:
   type: json
   content: |-
     {
-        "title": "Buy milk",
-        "description": "From the shop near home",
+        "title": "Buy bread",
+        "description": "",
         "completed": false,
         "category": {{category_id}}
     }
-order: 4000
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status is 200 OK", () => pm.response.to.have.status(200));
+      pm.test("Title was updated", () => pm.expect(pm.response.json().title).to.eql("Buy bread"));
+order: 9000

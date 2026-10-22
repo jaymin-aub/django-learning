@@ -1,4 +1,9 @@
 $kind: http-request
-url: "{{base_url}}/api/tasks/generic/tasks"
+url: '{{base_url}}/api/tasks/generic/tasks'
 method: GET
-order: 1000
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status is 200 OK", () => pm.response.to.have.status(200));
+order: 7000

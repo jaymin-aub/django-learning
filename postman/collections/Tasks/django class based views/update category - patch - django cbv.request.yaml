@@ -1,0 +1,19 @@
+$kind: http-request
+url: '{{base_url}}/api/tasks/django-cbv/category/{{category_id}}'
+method: PATCH
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+        "title": "Office"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status is 200 OK", () => pm.response.to.have.status(200));
+      pm.test("Title was updated", () => pm.expect(pm.response.json().title).to.eql("Office"));
+order: 5000

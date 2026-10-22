@@ -1,0 +1,9 @@
+$kind: http-request
+url: '{{base_url}}/api/tasks/generic/task/{{task_id}}'
+method: GET
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status is 404 Not Found", () => pm.response.to.have.status(404));
+order: 13000

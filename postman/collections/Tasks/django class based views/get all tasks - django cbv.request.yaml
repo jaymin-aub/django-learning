@@ -1,5 +1,9 @@
 $kind: http-request
-name: get all tasks - django cbv
-url: "{{base_url}}/api/tasks/django-cbv/tasks"
+url: '{{base_url}}/api/tasks/django-cbv/tasks'
 method: GET
-order: 610
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status is 200 OK", () => pm.response.to.have.status(200));
+order: 7000

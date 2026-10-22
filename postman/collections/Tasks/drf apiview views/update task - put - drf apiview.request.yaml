@@ -1,0 +1,22 @@
+$kind: http-request
+url: '{{base_url}}/api/tasks/drf-apiview/task/{{task_id}}'
+method: PUT
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+        "title": "Buy bread",
+        "description": "",
+        "completed": false,
+        "category": {{category_id}}
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status is 200 OK", () => pm.response.to.have.status(200));
+      pm.test("Title was updated", () => pm.expect(pm.response.json().title).to.eql("Buy bread"));
+order: 9000

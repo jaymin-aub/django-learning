@@ -16,7 +16,7 @@ class TaskSerializer(serializers.ModelSerializer):
     def validate_title(self, title: str):
         if title.isdigit():
             raise serializers.ValidationError("Title cannot contain only digits.")
-        return True
+        return title
 
 
 class CategorySerializer(serializers.ModelSerializer):
