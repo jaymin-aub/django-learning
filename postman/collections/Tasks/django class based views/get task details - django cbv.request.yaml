@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{base_url}}/api/tasks/django-cbv/task/{{task_id}}"
+method: GET
+order: 818

@@ -13,14 +13,13 @@ class TaskSerializer(serializers.ModelSerializer):
         model = Task
         fields = "__all__"  # use every field of the model
 
+    def validate_title(self, title: str):
+        if title.isdigit():
+            raise serializers.ValidationError("Title cannot contain only digits.")
+        return True
+
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = "__all__"
-
-
-class TaskInputSerializer(serializers.Serializer):
-    title = serializers.CharField(max_length=500)
-    description = serializers.CharField(required=False, allow_blank=True)
-    completed = serializers.BooleanField(default=False)

@@ -1,5 +1,0 @@
-$kind: http-request
-url: '{{base_url}}/api/tasks/{{task_id}}/'
-method: GET
-examples: './.resources/specific task.resources/examples'
-order: 3000

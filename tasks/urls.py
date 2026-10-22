@@ -12,32 +12,78 @@ The URLs are grouped by the style of view they use:
 
 from django.urls import path
 
-from . import views
+from tasks.views import django_fbv, django_cbv, drf_apiview, drf_generic
 
 # Namespace for these URLs, so we can refer to them as "tasks:<name>"
 app_name = "tasks"
 
 urlpatterns = [
-    # --- Plain Django views (return JsonResponse) ---
-    # GET  api/tasks/                     -> list all tasks
-    path("", views.get_all_tasks, name="task_list"),
-    # GET  api/tasks/5/                   -> details of task 5
-    path("<int:task_id>/", views.get_task_details, name="task_detail"),
-    # GET  api/tasks/category/2/          -> category 2 with its tasks
+    # ------------------------------------------------------------------------------------------------------
+    # --- Django function based views (return JsonResponse) ---
+    # ------------------------------------------------------------------------------------------------------
+    path("django-fbv/tasks", django_fbv.get_all_tasks, name="django_fbv_task_list"),
     path(
-        "category/<int:category_id>/",
-        views.get_category_with_tasks,
-        name="category_tasks",
+        "django-fbv/task/<int:task_id>",
+        django_fbv.get_task_details,
+        name="django_fbv_task_details",
     ),
-    # --- DRF function views (use @api_view and Response) ---
-    # GET  api/tasks/drf/                 -> list all tasks
-    path("drf/", views.drf_task_list, name="drf_task_list"),
-    # POST api/tasks/drf/create/          -> create a new task
-    path("drf/create/", views.create_task, name="drf_task_create"),
-    # PUT or PATCH api/tasks/drf/5/update/ -> update task 5
-    path("drf/<int:task_id>/update/", views.update_task, name="drf_task_update"),
-    # --- DRF class-based view ---
-    # GET  api/tasks/generic/             -> list all tasks
-    # POST api/tasks/generic/             -> create a new task
-    path("generic/", views.TaskListCreateView.as_view(), name="generic_task_list_create"),
+    path(
+        "django-fbv/categories",
+        django_fbv.get_all_categories,
+        name="django_fbv_category_list",
+    ),
+    # ------------------------------------------------------------------------------------------------------
+    # --- Django class based views
+    # ------------------------------------------------------------------------------------------------------
+    path(
+        "django-cbv/tasks",
+        django_cbv.TaskListView.as_view(),
+        name="django_cbv_task_list",
+    ),
+    path(
+        "django-cbv/task/<int:task_id>",
+        django_cbv.TaskDetailView.as_view(),
+        name="django_cbv_task_details",
+    ),
+    path(
+        "django-cbv/categories",
+        django_cbv.CategoryListView.as_view(),
+        name="django_cbv_category_list",
+    ),
+    # ------------------------------------------------------------------------------------------------------
+    # --- DRF @apiview decorator based views
+    # ------------------------------------------------------------------------------------------------------
+    path(
+        "drf-apiview/tasks",
+        drf_apiview.get_all_tasks,
+        name="drf_apiview_task_list",
+    ),
+    path(
+        "drf-apiview/task/<int:task_id>",
+        drf_apiview.get_task_details,
+        name="drf_apiview_task_details",
+    ),
+    path(
+        "drf-apiview/categories",
+        drf_apiview.get_all_categories,
+        name="drf_apiview_category_list",
+    ),
+    # ------------------------------------------------------------------------------------------------------
+    # --- DRF generic class based views
+    # ------------------------------------------------------------------------------------------------------
+    path(
+        "generic/tasks",
+        drf_generic.TaskListCreateView.as_view(),
+        name="task_list_create",
+    ),
+    path(
+        "generic/task/<int:task_id>",
+        drf_generic.TaskDetailView.as_view(),
+        name="task_detail",
+    ),
+    path(
+        "generic/categories",
+        drf_generic.CategoryListCreateView.as_view(),
+        name="category_list_create",
+    ),
 ]

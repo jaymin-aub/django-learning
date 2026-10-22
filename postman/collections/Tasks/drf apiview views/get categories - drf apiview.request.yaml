@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{base_url}}/api/tasks/drf-apiview/categories"
+method: GET
+order: 3000

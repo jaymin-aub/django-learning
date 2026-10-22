@@ -1,5 +1,0 @@
-$kind: http-request
-url: '{{base_url}}/api/tasks/drf/'
-method: GET
-examples: './.resources/list of tasks - drf.resources/examples'
-order: 5000

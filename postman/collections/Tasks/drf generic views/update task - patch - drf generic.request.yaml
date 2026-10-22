@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{base_url}}/api/tasks/generic/task/{{task_id}}"
+method: PATCH
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+        "completed": true
+    }
+order: 5000

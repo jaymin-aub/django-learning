@@ -1,0 +1,5 @@
+$kind: http-request
+name: get all tasks - django cbv
+url: "{{base_url}}/api/tasks/django-cbv/tasks"
+method: GET
+order: 610
