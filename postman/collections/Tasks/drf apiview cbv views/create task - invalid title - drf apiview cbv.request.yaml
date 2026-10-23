@@ -1,5 +1,5 @@
 $kind: http-request
-url: '{{base_url}}/api/tasks/drf-apiview/tasks'
+url: '{{base_url}}/api/tasks/drf-apiview-cbv/tasks'
 method: POST
 headers:
   - key: Content-Type

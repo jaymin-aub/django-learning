@@ -7,7 +7,8 @@ For example, "generic/tasks" below becomes "api/tasks/generic/tasks".
 The same CRUD API is built in several styles, one URL prefix per style:
     django-fbv/   -> plain Django function views (JsonResponse)
     django-cbv/   -> plain Django class based views
-    drf-apiview/  -> DRF @api_view function views
+    drf-apiview-fbv/ -> DRF @api_view function views
+    drf-apiview-cbv/ -> DRF APIView class based views
     generic/      -> DRF generic class based views
     viewset/      -> DRF ModelViewSet + router
 
@@ -21,7 +22,7 @@ Each style (except viewset, whose URLs come from the router) has:
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 
-from tasks.views import django_fbv, django_cbv, drf_apiview, drf_generic, drf_viewset
+from tasks.views import django_fbv, django_cbv, drf_apiview_fbv, drf_apiview_cbv, drf_generic, drf_viewset
 
 # Namespace for these URLs, so we can refer to them as "tasks:<name>"
 app_name = "tasks"
@@ -73,24 +74,47 @@ urlpatterns = [
     # --- DRF @apiview decorator based views
     # ------------------------------------------------------------------------------------------------------
     path(
-        "drf-apiview/tasks",
-        drf_apiview.task_list,
-        name="drf_apiview_task_list",
+        "drf-apiview-fbv/tasks",
+        drf_apiview_fbv.task_list,
+        name="drf_apiview_fbv_task_list",
     ),
     path(
-        "drf-apiview/task/<int:task_id>",
-        drf_apiview.task_detail,
-        name="drf_apiview_task_details",
+        "drf-apiview-fbv/task/<int:task_id>",
+        drf_apiview_fbv.task_detail,
+        name="drf_apiview_fbv_task_details",
     ),
     path(
-        "drf-apiview/categories",
-        drf_apiview.category_list,
-        name="drf_apiview_category_list",
+        "drf-apiview-fbv/categories",
+        drf_apiview_fbv.category_list,
+        name="drf_apiview_fbv_category_list",
     ),
     path(
-        "drf-apiview/category/<int:category_id>",
-        drf_apiview.category_detail,
-        name="drf_apiview_category_details",
+        "drf-apiview-fbv/category/<int:category_id>",
+        drf_apiview_fbv.category_detail,
+        name="drf_apiview_fbv_category_details",
+    ),
+    # ------------------------------------------------------------------------------------------------------
+    # --- DRF APIView class based views
+    # ------------------------------------------------------------------------------------------------------
+    path(
+        "drf-apiview-cbv/tasks",
+        drf_apiview_cbv.TaskListView.as_view(),
+        name="drf_apiview_cbv_task_list",
+    ),
+    path(
+        "drf-apiview-cbv/task/<int:task_id>",
+        drf_apiview_cbv.TaskDetailView.as_view(),
+        name="drf_apiview_cbv_task_details",
+    ),
+    path(
+        "drf-apiview-cbv/categories",
+        drf_apiview_cbv.CategoryListView.as_view(),
+        name="drf_apiview_cbv_category_list",
+    ),
+    path(
+        "drf-apiview-cbv/category/<int:category_id>",
+        drf_apiview_cbv.CategoryDetailView.as_view(),
+        name="drf_apiview_cbv_category_details",
     ),
     # ------------------------------------------------------------------------------------------------------
     # --- DRF generic class based views

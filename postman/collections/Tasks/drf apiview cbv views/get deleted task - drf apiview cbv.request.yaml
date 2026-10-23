@@ -1,5 +1,5 @@
 $kind: http-request
-url: '{{base_url}}/api/tasks/drf-apiview/task/{{task_id}}'
+url: '{{base_url}}/api/tasks/drf-apiview-cbv/task/{{task_id}}'
 method: GET
 scripts:
   - type: afterResponse
