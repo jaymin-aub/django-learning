@@ -32,11 +32,19 @@ INSTALLED_APPS = [
     # Third-party apps
     "rest_framework",
     # Our own apps
+    "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
     "tasks",
+    "users",
+    "rest_framework.authtoken",
+    # for CORS
+    "corsheaders",
 ]
 
 # Middleware runs on every request and response, from top to bottom
 MIDDLEWARE = [
+    # CORS must come before CommonMiddleware
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -113,4 +121,24 @@ MAILERS = {
     "default": {
         "BACKEND": "django.core.mail.backends.console.EmailBackend",
     },
+}
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        # "rest_framework.permissions.AllowAny",
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        # "rest_framework.authentication.TokenAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+}
+
+SIMPLE_JWT = {
+    "ROTATE_REFRESH_TOKENS": True,
+    # old refresh tokens stop working after a refresh
+    "BLACKLIST_AFTER_ROTATION": True,
 }

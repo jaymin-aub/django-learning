@@ -17,4 +17,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     # All task URLs live in tasks/urls.py and start with "api/tasks/"
     path("api/tasks/", include("tasks.urls")),
+    # All user URLs live in users/urls.py and start with "api/users/"
+    path("api/users/", include("users.urls")),
 ]

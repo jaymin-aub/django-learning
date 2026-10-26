@@ -1,0 +1,18 @@
+$kind: http-example
+request:
+  url: '{{base_url}}/api/users/token/refresh/'
+  method: POST
+response:
+  statusCode: 401
+  statusText: Unauthorized
+  headers:
+    - key: Content-Type
+      value: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "detail": "Token is blacklisted",
+        "code": "token_not_valid"
+      }
+order: 2000

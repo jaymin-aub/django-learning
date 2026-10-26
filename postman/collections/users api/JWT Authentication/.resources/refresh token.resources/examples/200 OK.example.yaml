@@ -1,0 +1,18 @@
+$kind: http-example
+request:
+  url: '{{base_url}}/api/users/token/refresh/'
+  method: POST
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    - key: Content-Type
+      value: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzkyOTk3MTc1LCJpYXQiOjE3OTI5OTY4NzUsImp0aSI6ImRkYTZlZGNmZjY1MzRmOTdhODAzZDI4Zjg5ZWQ4OTljIiwidXNlcl9pZCI6IjEifQ.3Etoi40TFlwvWIMzkEh169ksHZa6RG2PfM4-t007Z1Y",
+        "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc5MzA4MzI3NSwiaWF0IjoxNzkyOTk2ODc1LCJqdGkiOiIzODdjYzVmM2ZkZDY0OWJhOTcwYWFjZjVkMjI1NjRkNyIsInVzZXJfaWQiOiIxIn0.YqTkKRgAPlIHGyvtuu5mhFLo1Tnm4r7lQgUFvtN6Qdo"
+      }
+order: 1000

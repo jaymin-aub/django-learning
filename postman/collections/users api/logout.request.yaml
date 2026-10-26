@@ -1,0 +1,25 @@
+$kind: http-request
+method: POST
+url: '{{base_url}}/api/users/logout/'
+order: 3000
+headers:
+  - key: Content-Type
+    value: application/json
+auth:
+  type: bearer
+  credentials:
+    token: '{{access_token}}'
+body:
+  type: json
+  content: |-
+    {
+      "refresh": "{{refresh_token}}"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("returns 205", () => pm.response.to.have.status(205));
+      pm.collectionVariables.unset("access_token");
+      pm.collectionVariables.unset("refresh_token");
+    language: text/javascript
+examples: './.resources/logout.resources/examples'

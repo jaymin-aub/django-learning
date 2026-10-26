@@ -1,0 +1,3 @@
+$kind: collection
+description: Login (get an access + refresh pair) and refresh. Refresh rotates the refresh token and blacklists the old one.
+order: 2000

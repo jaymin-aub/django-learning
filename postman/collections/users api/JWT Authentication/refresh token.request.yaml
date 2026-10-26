@@ -1,0 +1,26 @@
+$kind: http-request
+method: POST
+url: '{{base_url}}/api/users/token/refresh/'
+order: 2000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "refresh": "{{refresh_token}}"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("returns 200", () => pm.response.to.have.status(200));
+      pm.test("returns new access and rotated refresh token", () => {
+        const body = pm.response.json();
+        pm.expect(body.access).to.be.a("string").and.not.empty;
+        pm.expect(body.refresh).to.be.a("string").and.not.eql(pm.collectionVariables.get("refresh_token"));
+        pm.collectionVariables.set("access_token", body.access);
+        pm.collectionVariables.set("refresh_token", body.refresh);
+      });
+    language: text/javascript
+examples: './.resources/refresh token.resources/examples'

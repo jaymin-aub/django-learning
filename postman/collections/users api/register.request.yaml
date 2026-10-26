@@ -1,0 +1,31 @@
+$kind: http-request
+method: POST
+url: '{{base_url}}/api/users/register/'
+order: 1000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "username": "newuser",
+      "email": "newuser@example.com",
+      "password": "strongpass123",
+      "password2": "strongpass123"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("returns 201", () => pm.response.to.have.status(201));
+      pm.test("returns user with id and JWT tokens", () => {
+        const body = pm.response.json();
+        pm.expect(body.user.id).to.be.a("number");
+        pm.expect(body.user.username).to.eql("newuser");
+        pm.expect(body.access_token).to.be.a("string").and.not.empty;
+        pm.expect(body.refresh_token).to.be.a("string").and.not.empty;
+        pm.collectionVariables.set("access_token", body.access_token);
+        pm.collectionVariables.set("refresh_token", body.refresh_token);
+      });
+    language: text/javascript
+examples: './.resources/register.resources/examples'

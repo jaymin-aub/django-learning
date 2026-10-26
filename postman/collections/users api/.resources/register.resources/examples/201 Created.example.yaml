@@ -1,0 +1,23 @@
+$kind: http-example
+request:
+  url: '{{base_url}}/api/users/register/'
+  method: POST
+response:
+  statusCode: 201
+  statusText: Created
+  headers:
+    - key: Content-Type
+      value: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "user": {
+          "id": 1,
+          "username": "newuser",
+          "email": "newuser@example.com"
+        },
+        "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc5MzA4MzI3MywiaWF0IjoxNzkyOTk2ODczLCJqdGkiOiJhZjBkNWQ3NjM1Yjc0YjI1YjVkNTc2NmE5Zjc1OTllNiIsInVzZXJfaWQiOiIxIn0.BajdVV0E8wwO90QEio3LYuvSQVXmNBHeBD_zt86A0jE",
+        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzkyOTk3MTczLCJpYXQiOjE3OTI5OTY4NzMsImp0aSI6ImUwMTY4NDVhY2U2MjQxMDdiYjkwMTAzODkzYWNiMmVkIiwidXNlcl9pZCI6IjEifQ.Z__S2ur-P3CnKPg0VuY3PMkxjr78h0a6bWDHAslWUOY"
+      }
+order: 1000

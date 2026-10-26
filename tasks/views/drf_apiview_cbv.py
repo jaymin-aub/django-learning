@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 from ..models import Task, Category
 from ..serializers import TaskSerializer, CategorySerializer
@@ -26,6 +27,7 @@ class TaskListView(APIView):
 
 
 class TaskDetailView(APIView):
+
     def get(self, request, task_id):
         task = get_object_or_404(Task, id=task_id)
         return Response(TaskSerializer(task).data)
@@ -51,6 +53,8 @@ class TaskDetailView(APIView):
 
 
 class CategoryListView(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         categories = Category.objects.all().order_by("-id")
         serializer = CategorySerializer(categories, many=True)

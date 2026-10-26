@@ -1,0 +1,13 @@
+$kind: collection
+name: Users API
+description: JWT auth for the task manager. Run register (or access token) first; it saves the tokens into collection variables used by refresh and logout.
+variables:
+  - key: base_url
+    value: 'http://127.0.0.1:8000'
+    disabled: false
+  - key: access_token
+    value: ''
+    disabled: false
+  - key: refresh_token
+    value: ''
+    disabled: false

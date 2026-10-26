@@ -1,0 +1,17 @@
+$kind: http-example
+request:
+  url: '{{base_url}}/api/users/register/'
+  method: POST
+response:
+  statusCode: 400
+  statusText: Bad Request
+  headers:
+    - key: Content-Type
+      value: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "error": "Email must be unique!"
+      }
+order: 2000
